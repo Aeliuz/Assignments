@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using JetBrains.Annotations;
+using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+
+public class parabolics : ProcessingLite.GP21
+{
+
+    public int numberOfLines = 40;
+    public float strokeWidth = 0.2f;
+    public int counter = 0;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Background(0);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+
+        
+        StrokeWeight(strokeWidth);
+        float distanceBetweenLinesY = Height / numberOfLines;
+        float distanceBetweenLinesX = Width / numberOfLines;
+
+        for (float i = 0; i < 24; i = i + 0.3f)
+        {
+            counter++;
+            if (counter % 3 == 0)
+            {
+                Stroke(80, 60, 180);
+                Line(0, 10 - i, 1 + i * 2, 0);
+            }
+            else
+            {
+                Stroke(180, 180, 180, 200);
+                Line(0, 10 - i, 1 + i * 2, 0);
+            }
+        }
+
+        for (float i = 0; i < 24; i = i + 0.3f)
+        {
+            Line(20, i, 1 + 20 - i * 3, 10);
+        }
+    }
+}
+        
+
