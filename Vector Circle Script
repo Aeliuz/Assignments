@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class Controller : ProcessingLite.GP21
+{
+    Vector2 CirclePos;
+    Vector2 CircleVelocity;
+    float diameter = 1;
+    int FramesToTravelDistance = 60;
+
+
+    void Start()
+    {
+        Application.targetFrameRate = 60;
+        CirclePos = new Vector2 (Width /2, Height /2);
+    }
+
+    void Update()
+    {
+        Background(0);       
+
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            CirclePos.x = MouseX;
+            CirclePos.y = MouseY;
+
+            CircleVelocity.x = 0;
+            CircleVelocity.y = 0;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            Line(CirclePos.x, CirclePos.y, MouseX, MouseY);
+        }        
+
+        if (Input.GetMouseButtonUp(0)) 
+        {
+            //CircleVelocity.x = (MouseX - CirclePos.x) / FramesToDistance;
+            //CircleVelocity.y = (MouseY - CirclePos.y) / FramesToDistance;
+
+            CircleVelocity = (new Vector2(MouseX, MouseY) - CirclePos) / FramesToTravelDistance;
+        }
+
+        CirclePos += CircleVelocity;
+        Circle(CirclePos.x, CirclePos.y, diameter);
+        
+        if (CirclePos.x < 1 || CirclePos.x > (Width - 0.65f)) 
+        {
+            CircleVelocity.x = CircleVelocity.x * -1;
+        }
+
+        if (CirclePos.y < 0.65f || CirclePos.y > (Height -0.65f)) 
+        {
+            CircleVelocity.y = CircleVelocity.y * -1;
+        }
+    }
+}
